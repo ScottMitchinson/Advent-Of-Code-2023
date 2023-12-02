@@ -57,9 +57,55 @@ class AdventOfCode
         Console.WriteLine(Answer);
     }
 
+    static void Puzzle2()
+    {
+        string[] FileLines = File.ReadAllLines("AdventOfCode2023/inputs/input2.txt");
+
+        int Answer = 0;
+
+        for (int Index = 0; Index < FileLines.Length; Index++)
+        {
+            int GameIndex = Index + 1;
+
+            string Game = FileLines[Index].Split(":")[1];
+            string[] Turns = Game.Split(";");
+
+            int RequiredBlue = 0;
+            int RequiredRed = 0;
+            int RequiredGreen = 0;
+            
+            foreach (string Turn in Turns)
+            {
+                string[] Cubes = Turn.Split(",");
+
+                foreach (string Cube in Cubes)
+                {
+                    string[] Details = Cube.Split(" ");
+                    if(Details[2] == "blue" && Int32.Parse(Details[1]) > RequiredBlue)
+                    {
+                        RequiredBlue = Int32.Parse(Details[1]);
+                    }
+                    else if (Details[2] == "green" && Int32.Parse(Details[1]) > RequiredGreen)
+                    {
+                        RequiredGreen = Int32.Parse(Details[1]);
+                    }
+                    else if(Details[2] == "red" && Int32.Parse(Details[1]) > RequiredRed)
+                    {
+                        RequiredRed = Int32.Parse(Details[1]);
+                    }
+                }
+            }
+
+            Answer += RequiredBlue * RequiredGreen * RequiredRed;
+        }
+
+        Console.WriteLine(Answer);
+    }
+
     static void Main(string[] args) 
     {
-        Puzzle1();
+        //Puzzle1();
+        Puzzle2();
     }
 }
 
